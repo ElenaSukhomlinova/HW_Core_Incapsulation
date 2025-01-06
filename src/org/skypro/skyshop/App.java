@@ -38,12 +38,18 @@ public class App {
         System.out.println("Есть ли в корзине арбуз " + basket.existsProduct("Арбуз"));
 
         // Поиск товара, который есть в корзине
-        System.out.println("Есть ли в корзине арбуз " + basket.existsProduct("Груша"));
+        System.out.println("Есть ли в корзине груша " + basket.existsProduct("Груша"));
 
         // Очистка корзины
         basket.clearBasket();
 
         // Печать содержимого пустой корзины
         basket.printBasket();
+
+        // Получение стоимости пустой корзины
+        System.out.println("Общая стоимость: " + basket.totalBasketPrice());
+
+        // Поиск товара по имени в пустой корзине
+        //System.out.println("Есть ли в корзине арбуз " + basket.existsProduct("Арбуз"));
     }
 }
