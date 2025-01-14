@@ -47,14 +47,12 @@ public class ProductBasket {
         } else {
             System.out.println("Содержимое корзины:");
             for (int i = 0; i < count; i++) {
-                if(products[i] != null)
+                if(products[i] != null) {
                     System.out.println(products[i].toString());;
+                }
             }
             System.out.println("Итого: " + totalBasketPrice());
             System.out.println("Специальных товаров: " + countSpecialProducts());
-            for (int i = 0; i < count; i++) {
-
-            }
         }
     }
 

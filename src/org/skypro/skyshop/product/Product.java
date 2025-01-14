@@ -17,7 +17,7 @@ public abstract class Product {
 
     public abstract int getProductCost();
 
-    public abstract String toString();
+
 
     public abstract boolean isSpecial();
 

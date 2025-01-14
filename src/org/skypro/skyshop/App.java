@@ -40,9 +40,6 @@ public class App {
         // Печать содержимого корзины
         basket.printBasket();
 
-        // Получение стоимости корзины
-        System.out.println("Общая стоимость: " + basket.totalBasketPrice());
-
         // Поиск товара, который есть в корзине
         System.out.println("Есть ли в корзине арбуз " + basket.existsProduct("Арбуз"));
 
