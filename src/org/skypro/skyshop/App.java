@@ -1,7 +1,10 @@
 package org.skypro.skyshop;
 
 
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.basket.ProductBasket;
 
 
@@ -9,21 +12,27 @@ import org.skypro.skyshop.basket.ProductBasket;
 public class App {
     public static void main(String[] args) {
 
-        Product apple = new Product("Яблоко", 115);
-        Product pear = new Product("Груша", 130);
-        Product melon = new Product("Дыня", 95);
-        Product watermelon = new Product("Арбуз", 70);
-        Product plum = new Product("Слива", 145);
-        Product grape = new Product("Виноград", 125);
+        SimpleProduct apple = new SimpleProduct("Яблоко", 115);
+        SimpleProduct pear = new SimpleProduct("Груша", 130);
+        SimpleProduct melon = new SimpleProduct("Дыня", 95);
+        SimpleProduct watermelon = new SimpleProduct("Арбуз", 70);
+        SimpleProduct plum = new SimpleProduct("Слива", 145);
+        SimpleProduct grape = new SimpleProduct("Виноград", 125);
+
+        DiscountedProduct orange = new DiscountedProduct("Апельсин", 95, 5);
+        DiscountedProduct grapefruits = new DiscountedProduct("Грейпфрукт", 105, 5);
+
+        FixPriceProduct oil = new FixPriceProduct("Масло");
 
         ProductBasket basket = new ProductBasket();
 
         // Добавление продукта в корзину
         basket.addProduct(apple);
-        basket.addProduct(melon);
         basket.addProduct(plum);
         basket.addProduct(grape);
-        basket.addProduct(watermelon);
+        basket.addProduct(orange);
+        basket.addProduct(oil);
+
 
         // Добавление продукта в заполненную корзину
         //basket.addProduct(pear);
@@ -31,14 +40,11 @@ public class App {
         // Печать содержимого корзины
         basket.printBasket();
 
-        // Получение стоимости корзины
-        System.out.println("Общая стоимость: " + basket.totalBasketPrice());
-
         // Поиск товара, который есть в корзине
         System.out.println("Есть ли в корзине арбуз " + basket.existsProduct("Арбуз"));
 
         // Поиск товара, который есть в корзине
-        System.out.println("Есть ли в корзине груша " + basket.existsProduct("Груша"));
+        System.out.println("Есть ли в корзине апельсин " + basket.existsProduct("Апельсин"));
 
         // Очистка корзины
         basket.clearBasket();
