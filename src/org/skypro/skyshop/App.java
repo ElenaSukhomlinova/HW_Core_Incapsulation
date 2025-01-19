@@ -6,7 +6,9 @@ import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.basket.ProductBasket;
-
+import org.skypro.skyshop.search.Article;
+import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
 
 
 public class App {
@@ -57,5 +59,20 @@ public class App {
 
         // Поиск товара по имени в пустой корзине
         //System.out.println("Есть ли в корзине арбуз " + basket.existsProduct("Арбуз"));
+
+        SearchEngine searchEngine = new SearchEngine(10);
+
+
+
+        searchEngine.addItem(new Article("Дыня", "Сочная и вкусная"));
+        searchEngine.addItem(new Article("Арбуз", "Спелый и красный"));
+        searchEngine.addItem(new Article("Виноград", "Лучшие грозди"));
+        searchEngine.addItem(new Article("Дыня", "Сочная и вкусная"));
+        searchEngine.addItem(new Article("Масло", "Пастеризованное, лучшего отжима"));
+
+        Searchable[] results1 = searchEngine.search("мас");
+
+
+
     }
 }
