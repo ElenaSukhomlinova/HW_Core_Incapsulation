@@ -32,10 +32,8 @@ public final class Article implements Searchable {
         return "ARTICLE";
     }
 
-    @Override
-    public String getName() {
-        return articleName;
-    }
+
+
 }
 
 

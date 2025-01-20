@@ -10,6 +10,9 @@ import org.skypro.skyshop.search.Article;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
+import java.sql.SQLOutput;
+import java.util.Arrays;
+
 
 public class App {
     public static void main(String[] args) {
@@ -63,14 +66,17 @@ public class App {
         SearchEngine searchEngine = new SearchEngine(10);
 
 
-
         searchEngine.addItem(new Article("Дыня", "Сочная и вкусная"));
         searchEngine.addItem(new Article("Арбуз", "Спелый и красный"));
         searchEngine.addItem(new Article("Виноград", "Лучшие грозди"));
-        searchEngine.addItem(new Article("Дыня", "Сочная и вкусная"));
+
         searchEngine.addItem(new Article("Масло", "Пастеризованное, лучшего отжима"));
 
-        Searchable[] results1 = searchEngine.search("мас");
+        String searchRequest1 = "Дын";
+        System.out.println("Поиск \"" + searchRequest1 + "\": " + Arrays.toString(searchEngine.search(searchRequest1)));
+
+        String searchRequest2 = "буз";
+        System.out.println("Поиск \"" + searchRequest2 + "\": " + Arrays.toString(searchEngine.search(searchRequest2)));
 
 
 
