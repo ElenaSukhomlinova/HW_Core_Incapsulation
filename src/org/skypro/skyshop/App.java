@@ -9,6 +9,8 @@ import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.search.Article;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
+import org.skypro.skyshop.exceptions.BestResultNotFound;
+
 
 import java.sql.SQLOutput;
 import java.util.Arrays;
@@ -78,6 +80,43 @@ public class App {
         String searchRequest2 = "буз";
         System.out.println("Поиск \"" + searchRequest2 + "\": " + Arrays.toString(searchEngine.search(searchRequest2)));
 
+        try {
+            SimpleProduct butter = new SimpleProduct("  ", 70);
+            System.out.println("Продукт создан " + butter.getProductName() + " Цена " + butter.getProductCost());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при создании продукта: " + e.getMessage());
+        }
+
+        try {
+            SimpleProduct bread = new SimpleProduct("", 80);
+            System.out.println("Продукт создан " + bread.getProductName() + " Цена " + bread.getProductCost());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при создании продукта: " + e.getMessage());
+        }
+
+        Searchable[] searchables = {
+            new SimpleProduct("Яблочный пирог",60),
+            new SimpleProduct("Яблочная долька", 80),
+            new SimpleProduct("Банановый сок", 89)
+        };
+
+
+
+        try {
+            String search = "Яблочная";
+            Searchable mostRelevant = searchEngine.findMostRelevant(searchables, search);
+            System.out.println("Наиболее подходящий объект для поисковой строки \"" + search + "\": " + mostRelevant);
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            String search = "батон";
+            Searchable mostRelevant = searchEngine.findMostRelevant(searchables, search);
+            System.out.println("Наиболее подходящий объект для поисковой строки \"" + search + "\": " + mostRelevant);
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
 
 
     }
