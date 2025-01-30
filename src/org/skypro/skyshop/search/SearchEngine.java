@@ -42,7 +42,7 @@ public class SearchEngine {
         }
 
         Searchable mostRelevant = null;
-        int maxCount = -1;
+        int maxCount = 0;
 
         for (Searchable searchable : searchables) {
             String term = searchable.getSearchTerm();
