@@ -11,4 +11,6 @@ public interface Searchable {
     default String getStringPresentation() {
         return getSearchTerm() + " - " + getSearchContent();
     }
+
+
 }

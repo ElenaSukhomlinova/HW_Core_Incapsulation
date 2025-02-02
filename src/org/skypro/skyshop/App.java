@@ -12,8 +12,10 @@ import org.skypro.skyshop.search.Searchable;
 import org.skypro.skyshop.exceptions.BestResultNotFound;
 
 
+import javax.sound.midi.Soundbank;
 import java.sql.SQLOutput;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class App {
@@ -40,12 +42,26 @@ public class App {
         basket.addProduct(orange);
         basket.addProduct(oil);
 
-
-        // Добавление продукта в заполненную корзину
-        //basket.addProduct(pear);
-
         // Печать содержимого корзины
         basket.printBasket();
+
+        // Удаляем продукт из корзины
+        List<Product> removedProducts = basket.removedProductsByName("Яблоко");
+        System.out.println("Удаленные продукты: " + removedProducts);
+
+        System.out.println("Содержимое корзины после удаления: ");
+        basket.printBasket();
+
+        // Удаляем несуществующий продукт
+        List<Product> removedNonExistent = basket.removedProductsByName("Манго");
+        if(removedNonExistent.isEmpty()) {
+            System.out.println("Список пуст");
+        }else {
+            System.out.println("Удаленные продукты: " + removedNonExistent);
+        }
+
+        basket.printBasket();
+
 
         // Поиск товара, который есть в корзине
         System.out.println("Есть ли в корзине арбуз " + basket.existsProduct("Арбуз"));
@@ -65,7 +81,7 @@ public class App {
         // Поиск товара по имени в пустой корзине
         //System.out.println("Есть ли в корзине арбуз " + basket.existsProduct("Арбуз"));
 
-        SearchEngine searchEngine = new SearchEngine(10);
+        SearchEngine searchEngine = new SearchEngine();
 
 
         searchEngine.addItem(new Article("Дыня", "Сочная и вкусная"));
@@ -75,10 +91,10 @@ public class App {
         searchEngine.addItem(new Article("Масло", "Пастеризованное, лучшего отжима"));
 
         String searchRequest1 = "Дын";
-        System.out.println("Поиск \"" + searchRequest1 + "\": " + Arrays.toString(searchEngine.search(searchRequest1)));
+        System.out.println("Поиск \"" + searchRequest1 + "\": " + Arrays.toString(searchEngine.search(searchRequest1).toArray()));
 
         String searchRequest2 = "буз";
-        System.out.println("Поиск \"" + searchRequest2 + "\": " + Arrays.toString(searchEngine.search(searchRequest2)));
+        System.out.println("Поиск \"" + searchRequest2 + "\": " + Arrays.toString(searchEngine.search(searchRequest2).toArray()));
 
         try {
             SimpleProduct butter = new SimpleProduct("  ", 70);
@@ -104,7 +120,7 @@ public class App {
 
         try {
             String search = "Яблочная";
-            Searchable mostRelevant = searchEngine.findMostRelevant(searchables, search);
+            Searchable mostRelevant = searchEngine.findMostRelevant(List.of(searchables), search);
             System.out.println("Наиболее подходящий объект для поисковой строки \"" + search + "\": " + mostRelevant);
         } catch (BestResultNotFound e) {
             System.out.println(e.getMessage());
@@ -112,11 +128,13 @@ public class App {
 
         try {
             String search = "батон";
-            Searchable mostRelevant = searchEngine.findMostRelevant(searchables, search);
+            Searchable mostRelevant = searchEngine.findMostRelevant(List.of(searchables), search);
             System.out.println("Наиболее подходящий объект для поисковой строки \"" + search + "\": " + mostRelevant);
         } catch (BestResultNotFound e) {
             System.out.println(e.getMessage());
         }
+
+
 
 
     }
