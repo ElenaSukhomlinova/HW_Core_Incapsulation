@@ -1,5 +1,7 @@
 package org.skypro.skyshop.search;
 
+import org.skypro.skyshop.exceptions.BestResultNotFound;
+
 public class SearchEngine {
     private Searchable[] searchables;
     private int size;
@@ -8,6 +10,8 @@ public class SearchEngine {
         this.searchables = new Searchable[capacity];
         this.size = 0;
     }
+
+
 
     public void addItem(Searchable searchable) {
         if (size < searchables.length) {
@@ -31,4 +35,49 @@ public class SearchEngine {
         }
         return results;
     }
+
+    public Searchable findMostRelevant(Searchable[] searchables, String search) throws BestResultNotFound {
+        if (searchables == null || searchables.length == 0 || search == null || search.isEmpty()) {
+            throw new IllegalArgumentException("Массив объектов или поисковая строка не могут быть пустыми.");
+        }
+
+        Searchable mostRelevant = null;
+        int maxCount = 0;
+
+        for (Searchable searchable : searchables) {
+            String term = searchable.getSearchTerm();
+            int count = countOccurrences(term, search);
+
+
+            if (count > maxCount) {
+                maxCount = count;
+                mostRelevant = searchable;
+            }
+        }
+
+        if (mostRelevant == null) {
+            throw new BestResultNotFound("Не найден подходящий объект для поискового запроса: " + search);
+        }
+
+        return mostRelevant;
+    }
+
+
+    private int countOccurrences(String text, String search) {
+        if (text == null || search == null || search.isEmpty()) {
+            return 0;
+        }
+
+        int count = 0;
+        int index = 0;
+
+
+        while ((index = text.indexOf(search, index)) != -1) {
+            count++;
+            index += search.length();
+        }
+
+        return count;
+    }
 }
+
