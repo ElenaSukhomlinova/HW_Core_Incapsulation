@@ -2,42 +2,43 @@ package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.exceptions.BestResultNotFound;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchEngine {
-    private Searchable[] searchables;
+    private List<Searchable> searchables;
     private int size;
 
-    public SearchEngine(int capacity) {
-        this.searchables = new Searchable[capacity];
+    public SearchEngine() {
+        this.searchables = new ArrayList<>();
         this.size = 0;
     }
 
-
-
     public void addItem(Searchable searchable) {
-        if (size < searchables.length) {
-            searchables[size++] = searchable;
+        if (searchable != null) {
+            searchables.add(searchable);
         } else {
-            System.out.println("Массив переполнен");
+            System.out.println("Нельзя добавить null елемент");
         }
     }
 
-    public Searchable[] search(String request) {
-        Searchable[] results = new Searchable[5];
+    public List<Searchable> search(String request) {
+        List<Searchable> results = new ArrayList<>();
         int count = 0;
 
         for (Searchable searchable : searchables) {
 
             if (searchable != null && searchable.getSearchTerm().toLowerCase().contains(request.toLowerCase())) {
-                results[count++] = searchable;
+                results.add(searchable);
                 if (count == 5) break;
             }
-            
+
         }
         return results;
     }
 
-    public Searchable findMostRelevant(Searchable[] searchables, String search) throws BestResultNotFound {
-        if (searchables == null || searchables.length == 0 || search == null || search.isEmpty()) {
+    public Searchable findMostRelevant(List<Searchable> searchables, String search) throws BestResultNotFound {
+        if (searchables == null || searchables.isEmpty() || search == null || search.isEmpty()) {
             throw new IllegalArgumentException("Массив объектов или поисковая строка не могут быть пустыми.");
         }
 
