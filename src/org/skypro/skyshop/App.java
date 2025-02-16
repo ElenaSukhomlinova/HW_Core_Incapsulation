@@ -14,10 +14,7 @@ import org.skypro.skyshop.exceptions.BestResultNotFound;
 
 import javax.sound.midi.Soundbank;
 import java.sql.SQLOutput;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 
 public class App {
@@ -92,18 +89,10 @@ public class App {
 
         searchEngine.addItem(new Article("Масло", "Пастеризованное, лучшего отжима"));
 
-        String searchRequest1 = "Дын";
-        System.out.println("Поиск \"" + searchRequest1 + "\": ");
-        TreeMap<String, Searchable> results1 = searchEngine.search(searchRequest1);
-        for (Map.Entry<String, Searchable> entry : results1.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
 
-        String searchRequest2 = "буз";
-        System.out.println("Поиск \"" + searchRequest2 + "\": ");
-        TreeMap<String, Searchable> results2 = searchEngine.search(searchRequest2);
-        for (Map.Entry<String, Searchable> entry : results2.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
+        TreeSet<Searchable> results = searchEngine.search("Дын");
+        for (Searchable result : results) {
+            System.out.println(result.getSearchTerm());
         }
 
         try {
