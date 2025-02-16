@@ -16,6 +16,8 @@ import javax.sound.midi.Soundbank;
 import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 public class App {
@@ -54,9 +56,9 @@ public class App {
 
         // Удаляем несуществующий продукт
         List<Product> removedNonExistent = basket.removedProductsByName("Манго");
-        if(removedNonExistent.isEmpty()) {
+        if (removedNonExistent.isEmpty()) {
             System.out.println("Список пуст");
-        }else {
+        } else {
             System.out.println("Удаленные продукты: " + removedNonExistent);
         }
 
@@ -91,10 +93,18 @@ public class App {
         searchEngine.addItem(new Article("Масло", "Пастеризованное, лучшего отжима"));
 
         String searchRequest1 = "Дын";
-        System.out.println("Поиск \"" + searchRequest1 + "\": " + Arrays.toString(searchEngine.search(searchRequest1).toArray()));
+        System.out.println("Поиск \"" + searchRequest1 + "\": ");
+        TreeMap<String, Searchable> results1 = searchEngine.search(searchRequest1);
+        for (Map.Entry<String, Searchable> entry : results1.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
 
         String searchRequest2 = "буз";
-        System.out.println("Поиск \"" + searchRequest2 + "\": " + Arrays.toString(searchEngine.search(searchRequest2).toArray()));
+        System.out.println("Поиск \"" + searchRequest2 + "\": ");
+        TreeMap<String, Searchable> results2 = searchEngine.search(searchRequest2);
+        for (Map.Entry<String, Searchable> entry : results2.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
 
         try {
             SimpleProduct butter = new SimpleProduct("  ", 70);
@@ -111,11 +121,10 @@ public class App {
         }
 
         Searchable[] searchables = {
-            new SimpleProduct("Яблочный пирог",60),
-            new SimpleProduct("Яблочная долька", 80),
-            new SimpleProduct("Банановый сок", 89)
+                new SimpleProduct("Яблочный пирог", 60),
+                new SimpleProduct("Яблочная долька", 80),
+                new SimpleProduct("Банановый сок", 89)
         };
-
 
 
         try {
@@ -133,9 +142,5 @@ public class App {
         } catch (BestResultNotFound e) {
             System.out.println(e.getMessage());
         }
-
-
-
-
     }
 }
