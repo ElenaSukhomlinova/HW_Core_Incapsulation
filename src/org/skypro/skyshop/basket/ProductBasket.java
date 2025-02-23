@@ -32,29 +32,19 @@ public class ProductBasket {
     }
 
     public int totalBasketPrice() {
-        int total = 0;
-
-        for (List<Product> products : productsMap.values()) {
-            for (Product product : products) {
-                if(product != null) {
-                    total += product.getProductCost();
-                }
-            }
-        }
-        return total;
+        return productsMap.values().stream()
+                .flatMap(List::stream)
+                .filter(Objects::nonNull)
+                .mapToInt(Product::getProductCost)
+                .sum();
     }
 
     public int countSpecialProducts() {
-        int countSpecial = 0;
-
-        for (List<Product> products : productsMap.values()) {
-            for (Product product : products) {
-                if (product != null && product.isSpecial()) {
-                    countSpecial++;
-                }
-            }
-        }
-        return countSpecial;
+        return (int) productsMap.values().stream()
+                .flatMap(List::stream)
+                .filter(Objects::nonNull)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     public void printBasket() {
@@ -62,13 +52,10 @@ public class ProductBasket {
             System.out.println("Корзина пуста");
         } else {
             System.out.println("Содержимое корзины:");
-            for (Map.Entry<String, List<Product>> entry : productsMap.entrySet()) {
-                for (Product product : entry.getValue()) {
-                    if(product != null) {
-                        System.out.println(product.toString());
-                    }
-                }
-            }
+            productsMap.values().stream()
+                    .flatMap(List::stream)
+                    .filter(Objects::nonNull)
+                    .forEach(product -> System.out.println(product.toString()));
             System.out.println("Итого: " + totalBasketPrice());
             System.out.println("Специальных товаров: " + countSpecialProducts());
         }
