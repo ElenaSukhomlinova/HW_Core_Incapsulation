@@ -32,6 +32,18 @@ public final class Article implements Searchable {
         return "ARTICLE";
     }
 
+    @Override
+    public int hashCode() {
+        return articleName.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Article article = (Article) o;
+        return articleName.equals(article.articleName);
+    }
 
 
 }

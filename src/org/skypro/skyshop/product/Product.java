@@ -36,8 +36,17 @@ public abstract class Product implements Searchable {
         return "PRODUCT";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true; // Проверка на ссылочное равенство
+        if (o == null || getClass() != o.getClass()) return false; // Проверка на null и класс
+        Product product = (Product) o; // Приведение типа
+        return productName.equals(product.productName); // Сравнение по имени продукта
+    }
 
-
-
+    @Override
+    public int hashCode() {
+        return productName.hashCode(); // Хэш-код на основе имени продукта
+    }
 
 }

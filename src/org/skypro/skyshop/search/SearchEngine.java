@@ -2,16 +2,14 @@ package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.exceptions.BestResultNotFound;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 public class SearchEngine {
-    private List<Searchable> searchables;
+    private Set<Searchable> searchables;
     private int size;
 
     public SearchEngine() {
-        this.searchables = new ArrayList<>();
+        this.searchables = new HashSet<>();
         this.size = 0;
     }
 
@@ -23,14 +21,22 @@ public class SearchEngine {
         }
     }
 
-    public TreeMap <String, Searchable> search(String request) {
-        TreeMap <String, Searchable> results = new TreeMap<>();
-        int count = 0;
+    public TreeSet <Searchable> search(String request) {
+        Comparator<Searchable> comparator = (s1, s2) -> {
+            int lengthCompare = Integer.compare(s2.getSearchTerm().length(),s1.getSearchTerm().length());
+            if(lengthCompare != 0) {
+                return lengthCompare;
+            }
+            return s1.getSearchTerm().compareTo(s2.getSearchTerm());
+        };
+
+        TreeSet<Searchable> results = new TreeSet<>(comparator);
+
 
         for (Searchable searchable : searchables) {
 
             if (searchable != null && searchable.getSearchTerm().toLowerCase().contains(request.toLowerCase())) {
-                results.put(searchable.getSearchTerm(), searchable);
+                results.add(searchable);
 
             }
 
